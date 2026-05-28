@@ -1,0 +1,80 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e8]: P
+        - generic [ref=e9]: PEEK
+      - paragraph [ref=e10]:
+        - text: AI가 링크를 읽고 콘텐츠로
+        - text: 만들어주는 스크랩 저장소
+    - navigation [ref=e11]:
+      - button " 스크랩" [ref=e12] [cursor=pointer]:
+        - generic [ref=e13]: 
+        - generic [ref=e14]: 스크랩
+      - button " 폴더" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 
+        - generic [ref=e17]: 폴더
+      - button " 링크" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: 
+        - generic [ref=e20]: 링크
+      - button " 내 콘텐츠" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: 
+        - generic [ref=e23]: 내 콘텐츠
+    - generic [ref=e24]:
+      - paragraph [ref=e25]: 저장 현황
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - generic [ref=e29]: 
+            - text: 링크
+          - generic [ref=e30]: "0"
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - generic [ref=e33]: 
+            - text: 폴더
+          - generic [ref=e34]: "0"
+    - generic [ref=e36]:
+      - generic [ref=e38]: 
+      - generic [ref=e39]:
+        - paragraph [ref=e40]: 나의 저장소
+        - paragraph [ref=e41]: 개인 스크랩
+      - button "" [ref=e42] [cursor=pointer]:
+        - generic [ref=e43]: 
+  - main [ref=e44]:
+    - generic [ref=e47]:
+      - generic [ref=e48]:
+        - heading "최근 저장" [level=3] [ref=e50]
+        - generic [ref=e51]:
+          - generic [ref=e52]: 
+          - paragraph [ref=e53]: 아직 저장된 링크가 없어요.
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - heading "스크랩" [level=2] [ref=e57]
+            - paragraph [ref=e58]: URL만 붙여넣으세요. 나머지는 Peek가 합니다.
+          - generic [ref=e59]:
+            - generic [ref=e60]: URL
+            - textbox "https://..." [ref=e61]
+          - generic [ref=e62]:
+            - generic [ref=e63]: 메모 (선택)
+            - textbox "이 링크를 저장하는 이유나 간단한 맥락을 남겨보세요." [ref=e64]
+            - paragraph [ref=e65]:
+              - generic [ref=e66]: 
+              - text: 메모가 있으면 분류 정확도가 높아집니다.
+          - button " AI 분석 후 저장" [ref=e67] [cursor=pointer]:
+            - generic [ref=e68]: 
+            - text: AI 분석 후 저장
+        - generic [ref=e69]:
+          - generic [ref=e70]: 
+          - generic [ref=e71]:
+            - paragraph [ref=e72]: AI 분석 결과
+            - paragraph [ref=e73]: URL을 저장하면 여기에 결과가 나타납니다.
+      - generic [ref=e74]:
+        - heading "내 콘텐츠" [level=3] [ref=e75]
+        - generic [ref=e76]:
+          - generic [ref=e77]: 
+          - generic [ref=e78]:
+            - paragraph [ref=e79]: 콘텐츠가 없어요
+            - paragraph [ref=e80]:
+              - text: 폴더에 링크를 2개 이상
+              - text: 저장하면 생성할 수 있어요.
