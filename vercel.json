@@ -1,6 +1,10 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "functions": {
+    "api/generate-content.js": { "maxDuration": 60 },
+    "api/analyze-url.js": { "maxDuration": 30 }
+  },
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]

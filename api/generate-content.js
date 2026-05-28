@@ -121,7 +121,7 @@ finalDraft는 단순한 정보 나열이 아니라, 독자가 읽고 싶어지�
   try {
     const message = await client.messages.create({
       model: MODEL_CONTENT,
-      max_tokens: 20000,
+      max_tokens: 8000,
       messages: [{ role: 'user', content: prompt }],
     })
     const json = safeParseJSON(message.content[0].text)
