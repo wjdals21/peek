@@ -19,12 +19,12 @@ export default function FolderPage({ onNavigate }) {
   const [generatingContent, setGeneratingContent] = useState(false)
 
   async function handleCreateContent(folder) {
-    const folderScraps = scraps.filter(s => s.folderId === folder.id)
+    const folderScraps = scraps.filter(s => s.folder_id === folder.id)
     setGeneratingContent(true)
     try {
       const result = await generateContent({ folderName: folder.name, scraps: folderScraps })
       addContent({
-        folderId: folder.id,
+        folder_id: folder.id,
         title: result.title,
         contentType: result.contentType,
         coreSummary: result.summary ?? result.coreSummary,
@@ -68,8 +68,8 @@ export default function FolderPage({ onNavigate }) {
 
   // 폴더 상세 뷰
   if (selectedFolder) {
-    const folderScraps = scraps.filter(s => s.folderId === selectedFolder.id)
-    const folderContents = contents.filter(c => c.folderId === selectedFolder.id)
+    const folderScraps = scraps.filter(s => s.folder_id === selectedFolder.id)
+    const folderContents = contents.filter(c => c.folder_id === selectedFolder.id)
     return (
       <FolderDetail
         folder={selectedFolder}
