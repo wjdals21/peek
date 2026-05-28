@@ -23,7 +23,7 @@ export default function FolderPage({ onNavigate }) {
     setGeneratingContent(true)
     try {
       const result = await generateContent({ folderName: folder.name, scraps: folderScraps })
-      addContent({
+      await addContent({
         folder_id: folder.id,
         title: result.title,
         contentType: result.contentType,

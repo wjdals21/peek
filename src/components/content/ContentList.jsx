@@ -6,15 +6,11 @@ export default function ContentList({ contents, folders, onOpen, onDelete, onNav
   const [filterFolderId, setFilterFolderId] = useState(null)
 
   const filtered = filterFolderId
-    ? contents.filter(c => c.folderId === filterFolderId)
+    ? contents.filter(c => c.folder_id === filterFolderId)
     : contents
 
-  /**
-   * O(F×C) → O(F+C) 최적화:
-   * contents를 먼저 Set으로 그룹핑한 뒤 folders를 한 번만 순회.
-   */
   const folderIds = useMemo(
-    () => new Set(contents.map(c => c.folderId)),
+    () => new Set(contents.map(c => c.folder_id)),
     [contents]
   )
   const foldersWithContents = useMemo(
@@ -66,7 +62,7 @@ export default function ContentList({ contents, folders, onOpen, onDelete, onNav
             <p className="text-base font-semibold text-blue-900 leading-snug">{content.title}</p>
             <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed">{content.coreSummary}</p>
             <div className="flex items-center justify-between mt-auto pt-1">
-              <span className="text-xs text-blue-500/45">{formatRelativeTime(content.createdAt)}</span>
+              <span className="text-xs text-blue-500/45">{formatRelativeTime(content.created_at)}</span>
               <button
                 onClick={e => { e.stopPropagation(); onDelete(content.id) }}
                 className="text-red-300 hover:text-red-500"
