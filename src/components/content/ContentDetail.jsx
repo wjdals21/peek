@@ -44,11 +44,11 @@ function PointItem({ item }) {
 
 // ── 핵심 포인트 섹션 ──────────────────────────────────────
 function KeyPoints({ content }) {
-  const merged = content.mergedPoints ?? content.dedupedPoints ?? []
-  const unique = content.uniquePoints ?? content.uniqueInsights ?? []
-  const notes = content.reusableNotes ?? []
-  const questions = content.nextQuestions ?? []
-  const rate = content.duplicateMergeRate
+  const merged = content.merged_points ?? content.deduped_points ?? []
+  const unique = content.unique_points ?? []
+  const notes = content.reusable_notes ?? []
+  const questions = content.next_questions ?? []
+  const rate = content.duplicate_merge_rate
   const stats = content.stats
 
   const hasAny = merged.length || unique.length || notes.length || questions.length
@@ -119,8 +119,8 @@ function KeyPoints({ content }) {
 // ── 제거된 내용 (토글) ────────────────────────────────────
 function RemovedSection({ content }) {
   const [open, setOpen] = useState(false)
-  const noise = content.removedNoise ?? []
-  const diff = content.differentPerspectives ?? []
+  const noise = content.removed_noise ?? []
+  const diff = content.different_perspectives ?? []
   if (!noise.length && !diff.length) return null
 
   return (
@@ -286,10 +286,10 @@ export default function ContentDetail({ content, onBack, onDelete }) {
           <i className="ti ti-arrow-left text-lg" />
         </button>
         <div className="flex-1 min-w-0">
-          <p className="text-xs text-blue-400 font-medium uppercase tracking-wider mb-1">{content.contentType}</p>
+          <p className="text-xs text-blue-400 font-medium uppercase tracking-wider mb-1">{content.content_type}</p>
           <h2 className="text-xl font-semibold text-slate-800 leading-snug">{content.title}</h2>
-          {content.coreSummary && (
-            <p className="text-sm text-slate-500 mt-2 leading-relaxed">{content.coreSummary}</p>
+          {content.core_summary && (
+            <p className="text-sm text-slate-500 mt-2 leading-relaxed">{content.core_summary}</p>
           )}
         </div>
         <button
@@ -307,7 +307,7 @@ export default function ContentDetail({ content, onBack, onDelete }) {
       <RemovedSection content={content} />
 
       {/* 섹션 3: 최종 초안 */}
-      <FinalDraftCard draft={content.finalDraft} />
+      <FinalDraftCard draft={content.final_draft} />
     </div>
   )
 }

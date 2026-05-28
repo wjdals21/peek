@@ -48,20 +48,20 @@ function ContentPreviewCard({ content }) {
         <span className="text-sm font-semibold uppercase tracking-wider text-blue-400">최신 콘텐츠</span>
       </div>
       <p className="text-base font-semibold text-slate-800 leading-snug">{content.title}</p>
-      <p className="text-sm text-slate-500 leading-relaxed line-clamp-4">{content.coreSummary}</p>
-      {content.dedupedPoints?.slice(0, 2).map((pt, i) => (
+      <p className="text-sm text-slate-500 leading-relaxed line-clamp-4">{content.core_summary}</p>
+      {content.deduped_points?.slice(0, 2).map((pt, i) => (
         <div key={i} className="flex items-start gap-2 text-sm text-slate-600">
           <span className="mt-2 w-1 h-1 rounded-full bg-blue-400 shrink-0" />
           <span className="line-clamp-2">{pt}</span>
         </div>
       ))}
-      {content.mergedPoints?.slice(0, 2).map((pt, i) => (
+      {content.merged_points?.slice(0, 2).map((pt, i) => (
         <div key={i} className="flex items-start gap-2 text-sm text-slate-600">
           <span className="mt-2 w-1 h-1 rounded-full bg-blue-400 shrink-0" />
           <span className="line-clamp-2">{pt.point ?? pt}</span>
         </div>
       ))}
-      <p className="text-sm text-slate-400">{formatRelativeTime(content.createdAt)}</p>
+      <p className="text-sm text-slate-400">{formatRelativeTime(content.created_at)}</p>
     </div>
   )
 }

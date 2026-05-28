@@ -60,7 +60,7 @@ export default function ContentList({ contents, folders, onOpen, onDelete, onNav
             onClick={() => onOpen(content)}
           >
             <p className="text-base font-semibold text-blue-900 leading-snug">{content.title}</p>
-            <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed">{content.coreSummary}</p>
+            <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed">{content.core_summary}</p>
             <div className="flex items-center justify-between mt-auto pt-1">
               <span className="text-xs text-blue-500/45">{formatRelativeTime(content.created_at)}</span>
               <button
