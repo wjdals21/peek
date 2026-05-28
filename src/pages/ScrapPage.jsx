@@ -167,10 +167,10 @@ export default function ScrapPage({ onNavigate, isLoggedIn }) {
         </div>
       )}
 
-      <div className="grid grid-cols-[290px_1fr_290px] gap-7 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] lg:grid-cols-[290px_1fr_290px] gap-5 lg:gap-7 items-start">
 
         {/* 왼쪽: 최근 저장 */}
-        <div className="flex flex-col gap-3">
+        <div className="hidden md:flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-semibold text-slate-700">최근 저장</h3>
             {scraps.length > 0 && (
@@ -219,7 +219,7 @@ export default function ScrapPage({ onNavigate, isLoggedIn }) {
         </div>
 
         {/* 오른쪽: 최신 콘텐츠 미리보기 */}
-        <div className="flex flex-col gap-3">
+        <div className="hidden lg:flex flex-col gap-3">
           <h3 className="text-base font-semibold text-slate-700">내 콘텐츠</h3>
           {latestContent ? (
             <ContentPreviewCard content={latestContent} />

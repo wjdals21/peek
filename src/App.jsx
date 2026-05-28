@@ -35,8 +35,8 @@ function MainApp({ isLoggedIn }) {
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">
       <Sidebar tabs={TABS} activeTab={activeTab} onTabChange={handleTabChange} />
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-6xl mx-auto px-12 py-10">
+      <main className="flex-1 overflow-y-auto pb-16 md:pb-0">
+        <div className="max-w-6xl mx-auto px-4 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-10">
           {activeTab === 'scrap'   && <ScrapPage onNavigate={setActiveTab} isLoggedIn={isLoggedIn} />}
           {activeTab === 'folder'  && <FolderPage onNavigate={setActiveTab} />}
           {activeTab === 'links'   && <LinksPage onNavigate={setActiveTab} />}

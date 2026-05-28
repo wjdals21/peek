@@ -21,7 +21,22 @@ export default function Sidebar({ tabs, activeTab, onTabChange }) {
 
   return (
     <>
-    <aside className="w-72 flex flex-col h-full shrink-0 bg-white border-r border-slate-100">
+    {/* 모바일 하단 탭바 */}
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex md:hidden bg-white border-t border-slate-100">
+      {tabs.map(tab => (
+        <button
+          key={tab.id}
+          onClick={() => onTabChange(tab.id)}
+          className={`flex-1 flex flex-col items-center justify-center py-2.5 gap-1 text-xs transition-colors
+            ${activeTab === tab.id ? 'text-blue-600 font-semibold' : 'text-slate-400'}`}
+        >
+          <i className={`ti ${tab.icon} text-xl`} />
+          <span>{tab.label}</span>
+        </button>
+      ))}
+    </nav>
+
+    <aside className="hidden md:flex md:flex-col w-60 lg:w-72 h-full shrink-0 bg-white border-r border-slate-100">
 
       {/* Brand */}
       <div className="px-6 py-6 border-b border-slate-100">
