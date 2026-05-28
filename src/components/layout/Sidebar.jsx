@@ -11,6 +11,7 @@ export default function Sidebar({ tabs, activeTab, onTabChange }) {
   const navigate = useNavigate()
   const [showMenu, setShowMenu] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
+  const [showMobileProfile, setShowMobileProfile] = useState(false)
   const [avatarError, setAvatarError] = useState(false)
   const { profile } = useProfile()
 
@@ -34,7 +35,60 @@ export default function Sidebar({ tabs, activeTab, onTabChange }) {
           <span>{tab.label}</span>
         </button>
       ))}
+      {/* 프로필 탭 */}
+      <button
+        onClick={() => setShowMobileProfile(prev => !prev)}
+        className={`flex-1 flex flex-col items-center justify-center py-2.5 gap-1 text-xs transition-colors
+          ${showMobileProfile ? 'text-blue-600 font-semibold' : 'text-slate-400'}`}
+      >
+        <div className="w-6 h-6 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+          {profile?.avatar_url && !avatarError
+            ? <img src={profile.avatar_url} className="w-full h-full object-cover" onError={() => setAvatarError(true)} />
+            : <i className="ti ti-user text-white text-xs" />
+          }
+        </div>
+        <span>프로필</span>
+      </button>
     </nav>
+
+    {/* 모바일 프로필 바텀시트 */}
+    {showMobileProfile && (
+      <div className="fixed inset-0 z-40 md:hidden" onClick={() => setShowMobileProfile(false)}>
+        <div
+          className="absolute bottom-16 left-0 right-0 bg-white border-t border-slate-100 rounded-t-2xl shadow-xl p-5"
+          onClick={e => e.stopPropagation()}
+        >
+          <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-100">
+            <div className="w-11 h-11 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shrink-0">
+              {profile?.avatar_url && !avatarError
+                ? <img src={profile.avatar_url} className="w-full h-full object-cover" onError={() => setAvatarError(true)} />
+                : <i className="ti ti-user text-white text-base" />
+              }
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-base font-semibold text-slate-700 truncate">{profile?.nickname ? `${profile.nickname} 저장소` : '나의 저장소'}</p>
+              <p className="text-sm text-slate-400 truncate">{user?.email ?? '개인 스크랩'}</p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <button
+              onClick={() => { setShowSettings(true); setShowMobileProfile(false) }}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-700 hover:bg-slate-50 transition-colors w-full text-left"
+            >
+              <i className="ti ti-settings text-base text-slate-400" />
+              프로필 설정
+            </button>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-red-500 hover:bg-red-50 transition-colors w-full text-left"
+            >
+              <i className="ti ti-logout text-base" />
+              로그아웃
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
 
     <aside className="hidden md:flex md:flex-col w-60 lg:w-72 h-full shrink-0 bg-white border-r border-slate-100">
 
