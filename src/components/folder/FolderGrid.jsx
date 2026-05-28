@@ -12,9 +12,9 @@ export default function FolderGrid({ folders, scraps, loading, onCreateContent, 
   const scrapsByFolderId = useMemo(() => {
     const m = new Map()
     for (const s of scraps) {
-      const arr = m.get(s.folderId) ?? []
+      const arr = m.get(s.folder_id) ?? []
       arr.push(s)
-      m.set(s.folderId, arr)
+      m.set(s.folder_id, arr)
     }
     return m
   }, [scraps])
