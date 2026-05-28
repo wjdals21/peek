@@ -20,7 +20,16 @@ export default function LinkCard({ scrap, onDelete, onChangeFolder, onPreview })
   const typeColor = contentTypeColor[scrap.content_type] ?? 'gray'
 
   return (
-    <div className="card flex flex-col gap-3.5 cursor-pointer hover:border-blue-200 hover:shadow-soft transition-all" onClick={() => onPreview?.(scrap)}>
+    <div className="card flex flex-col gap-3.5 cursor-pointer hover:border-blue-200 hover:shadow-soft transition-all overflow-hidden !p-0" onClick={() => onPreview?.(scrap)}>
+      {scrap.thumbnail && (
+        <img
+          src={scrap.thumbnail}
+          alt=""
+          className="w-full h-36 object-cover"
+          onError={e => { e.currentTarget.style.display = 'none' }}
+        />
+      )}
+      <div className="flex flex-col gap-3.5 p-6">
       {/* 헤더: 아이콘 + 제목 + 유형 뱃지 */}
       <div className="flex items-start gap-3">
         <DomainIcon url={scrap.url} className="w-9 h-9 text-sm rounded-lg" />
@@ -89,6 +98,7 @@ export default function LinkCard({ scrap, onDelete, onChangeFolder, onPreview })
             </button>
           )}
         </div>
+      </div>
       </div>
     </div>
   )

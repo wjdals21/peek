@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { load } from 'cheerio'
 
 const client = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY })
 const MODEL_ANALYZE = 'claude-haiku-4-5-20251001'
@@ -12,6 +13,33 @@ async function fetchWithJina(url) {
   if (!res.ok) throw new Error(`Jina Reader HTTP ${res.status}`)
   const text = await res.text()
   return text.slice(0, 8000)
+}
+
+async function fetchOgImage(url) {
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PeekBot/1.0)', Accept: 'text/html' },
+      signal: AbortSignal.timeout(8000),
+    })
+    if (!res.ok) return null
+    const html = await res.text()
+    const $ = load(html)
+    const raw =
+      $('meta[property="og:image"]').attr('content') ||
+      $('meta[name="twitter:image"]').attr('content') ||
+      $('meta[property="og:image:url"]').attr('content') ||
+      null
+    if (!raw) return null
+    // 상대 URL → 절대 URL 변환
+    try {
+      new URL(raw)
+      return raw
+    } catch {
+      return new URL(raw, url).href
+    }
+  } catch {
+    return null
+  }
 }
 
 function validateUrl(url) {
@@ -41,19 +69,21 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: '유효하지 않은 URL입니다.' })
   }
 
-  let pageContent = ''
-  try {
-    pageContent = await fetchWithJina(url)
-  } catch {
-    // Jina 실패 시 URL만으로 분석 진행
-  }
+  // 텍스트 + 이미지 병렬 fetch
+  const [pageContent, thumbnail] = await Promise.allSettled([
+    fetchWithJina(url),
+    fetchOgImage(url),
+  ]).then(([text, img]) => [
+    text.status === 'fulfilled' ? text.value : '',
+    img.status === 'fulfilled' ? img.value : null,
+  ])
 
   const folderList = folders.map(f => f.name).join(', ') || '없음'
   const contentBlock = pageContent
     ? `페이지 본문:\n${pageContent}`
     : `URL: ${url} (페이지 내용을 가져올 수 없어 URL만으로 추론합니다.)`
 
-  const prompt = `다음 웹페이지 내용을 분석해서 JSON으로만 반환해줘. 사전 설명이나 마크다운 코드블록 없이 순수 JSON만.
+  const promptText = `다음 웹페이지 내용을 분석해서 JSON으로만 반환해줘. 사전 설명이나 마크다운 코드블록 없이 순수 JSON만.
 
 입력:
 - 원본 URL: ${url}
@@ -72,14 +102,22 @@ ${contentBlock}
   "reason": "폴더 추천 이유 1~2문장"
 }`
 
+  // 이미지가 있으면 멀티모달, 없으면 텍스트만
+  const messageContent = thumbnail
+    ? [
+        { type: 'text', text: promptText },
+        { type: 'image', source: { type: 'url', url: thumbnail } },
+      ]
+    : promptText
+
   try {
     const message = await client.messages.create({
       model: MODEL_ANALYZE,
       max_tokens: 1024,
-      messages: [{ role: 'user', content: prompt }],
+      messages: [{ role: 'user', content: messageContent }],
     })
     const json = safeParseJSON(message.content[0].text)
-    res.json(json)
+    res.json({ ...json, thumbnail })
   } catch (err) {
     res.status(500).json({ error: err.message })
   }

@@ -17,14 +17,24 @@ function RecentScrapCard({ scrap }) {
       href={scrap.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-start gap-3 p-4 rounded-xl bg-white border border-slate-100 shadow-subtle hover:border-blue-200 hover:shadow-soft transition-all group"
+      className="flex flex-col rounded-xl bg-white border border-slate-100 shadow-subtle hover:border-blue-200 hover:shadow-soft transition-all group overflow-hidden"
     >
-      <DomainIcon url={scrap.url} className="w-10 h-10 text-base rounded-lg" />
-      <div className="flex-1 min-w-0">
-        <p className="text-base font-medium text-slate-800 line-clamp-2 leading-snug group-hover:text-blue-700 transition-colors">
-          {scrap.title || getDomain(scrap.url)}
-        </p>
-        <p className="text-sm text-slate-400 mt-1">{formatRelativeTime(scrap.saved_at)}</p>
+      {scrap.thumbnail && (
+        <img
+          src={scrap.thumbnail}
+          alt=""
+          className="w-full h-28 object-cover"
+          onError={e => { e.currentTarget.style.display = 'none' }}
+        />
+      )}
+      <div className="flex items-start gap-3 p-4">
+        <DomainIcon url={scrap.url} className="w-10 h-10 text-base rounded-lg shrink-0" />
+        <div className="flex-1 min-w-0">
+          <p className="text-base font-medium text-slate-800 line-clamp-2 leading-snug group-hover:text-blue-700 transition-colors">
+            {scrap.title || getDomain(scrap.url)}
+          </p>
+          <p className="text-sm text-slate-400 mt-1">{formatRelativeTime(scrap.saved_at)}</p>
+        </div>
       </div>
     </a>
   )
@@ -118,6 +128,7 @@ export default function ScrapPage({ onNavigate, isLoggedIn }) {
         folder_id: folder.id,
         content_type: analysisResult.contentType,
         fetch_status: 'success',
+        thumbnail: analysisResult.thumbnail ?? null,
       })
       setAnalysisResult(null)
       setPendingInput(null)
